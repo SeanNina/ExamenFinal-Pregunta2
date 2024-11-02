@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: ucatec  # Cambia la contraseña si lo deseas
+      MYSQL_DATABASE: mi_base_de_datos
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql  # Esto indica a phpMyAdmin que busque el servicio "mysql" en lugar de localhost
+      PMA_USER: root
+      PMA_PASSWORD: ucatec  # Esta debe coincidir con la contraseña de MySQL
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
+
